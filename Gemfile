@@ -15,6 +15,8 @@ gem 'secure_headers'
 gem 'ffaker'
 gem 'timecop'
 
+gem 'net-ping'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry-rails'

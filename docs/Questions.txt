@@ -1,0 +1,81 @@
+1. What type of Ping?  From the user story [0] note, it looks like a TCP ping.
+TCP ping.
+
+2. What is the ping interval?  What is a good value for the timeout?
+
+Timeout value: 1 second timeout value
+
+CS group, have lots of machines that belong to the customers. Find out which machines are not online.
+
+30 minutes ping interval
+
+3. A status web page with a percentage of targets reachable, this is assumed to be a point-in-time result, showing all of the pings within a time-frame?  Or is it just the last result of every ping?
+
+The most recent machines that have just gone offline are the most important, as opposed to machines that had been offline continuously.
+
+Interval since last offline.
+
+4. For the report types, I understand pie chart, but what does a detailed listing mean? Does this mean a table of hosts to targets to last-ping-results?  For cumulative totals, do you mean the percentage over time?
+
+We want to drill down into the data and see all the machines that are offline and the last time they were online.
+
+customer, ip address, hostname, status (reachable?) and the last time they were up.
+
+Sortable columns.
+
+Pie chart, 1000 machines we care about, 2000 are online, and 8000 are offline.
+Numbers to go along with the graphs.
+Bar chart/pie chart.
+
+> It's important to provide high-level data across all targets in the system.
+5. I'm not sure what this means, do you mean that all targets need to have roughly the same ping-interval, so as to provide the same level of granularity?
+
+Summary: The total picture is most of our machines are online or offline.
+Wedges are labeled or mouse over-able.
+
+Use process model for paralellization.
+
+6. Javascript charting libraries are good.
+Use Bootstrap for UI
+
+status, last_up
+
+status: 'up', 'down'
+
+7. Run the script on cron
+
+
+8. What port should the tcp ping connect on?  Should this be configurable by target?
+
+Failure scenarios:
+
+What if the previous run of the script had not yet finished by the time the next one was set to start.
+
+Soluation A: Lockfile/Pidfile, which would prevent the program from rerunning if the lockfile exists. 
+
+What if the script crashes?  Will it clean up its environment properly?
+
+Partial Solution: Wrap the program in a begin/rescue to handle application-level exceptions.
+
+
+Javascript testing framework:  
+
+
+================================================================================
+
+
+Customers want the report to load quickly, does that mean that they want to see a 'pinging' status message?  Or do they always want to see the last ping-set?
+
+I thought about storing the ping results in the database, but then I thought about how many rows there could potentially be, and I'm wondering about the scaling.
+
+So the question is, how many pings should we keep track of?  Just the last one or several over a period of time?
+
+If several over a period, maybe we should instead store a 'ping digest' or some representation of uptime/reachability over a period?
+
+What kind of historical data do we need?
+
+If we don't need historical data, then we could just store a 'last ping'.  This could be denormalized to simply be additional fields on the target table.
+
+What is the overall purpose of this app?  Monitoring what appliances are reachable
+
+

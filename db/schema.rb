@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529201158) do
+ActiveRecord::Schema.define(version: 20150805190726) do
 
   create_table "appliances", force: true do |t|
     t.string   "name"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20140529201158) do
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "reachable",    default: false
+    t.datetime "last_up"
+    t.boolean  "ping_enabled", default: true
   end
 
   add_index "targets", ["appliance_id"], name: "index_targets_on_appliance_id"
