@@ -1,81 +1,75 @@
 
 class PingProcessor
 
-  attr_reader :port, :timeout, :number_of_processes
+  attr_reader :port, :timeout, :batch_size, :debug
 
   DEFAULTS = {
     port: 80,
     timeout: 1,
-    number_of_processes: 10
+    batch_size: 100,
+    debug: false
   }
 
   def initialize( config={} )
     config = DEFAULTS.merge( config )
     @port = config[:port]
     @timeout = config[:timeout]
-    @number_of_processes = config[:number_of_processes]
-  end
-
-  def batch_size( count )
-    count / self.number_of_processes
-  end
-
-  def remainder( count )
-    count % self.number_of_processes
-  end
-
-  def start( n, count )
-    (self.batch_size( count ) * n) 
+    @batch_size = config[:batch_size]
+    @debug = config[:debug]
   end
 
   def run( dataset )
-    0.upto( self.number_of_processes - 1 ).each do |n|
-      fork do
-        dataset.find_in_batches( 
-                                batch_size: self.batch_size( dataset.count ),
-                                start: self.start( n, dataset.count )
-                                ) do |group|
-          puts "\n\nGroup: #{n}\n\n"
-          group.each do |target|
-            threads = []
-            threads << Thread.new do
-              p1 = Net::Ping::TCP.new( target.address, self.port, self.timeout )
+    puts "Total targets to check: #{dataset.count}"
+    total = 0
+    n = 1
+    dataset.find_in_batches( 
+                            batch_size: self.batch_size
+                            ) do |group|
+      puts "\n\nGroup: #{n}\n\n" if debug
+      n += 1
+      threads = []
+      ping_results_by_id = {}
+      group.each do |target|
+
+        threads << Thread.new do
+          p1 = Net::Ping::TCP.new( target.address, self.port, self.timeout )
               
-              check_ping( p1, target )
-            end
-            threads.each { |thr| thr.join }
-          end
+          results = check_ping( p1 )
+          ping_results_by_id[ target.id ] = results
         end
+
       end
+
+      threads.each { |thr| thr.join }
+      ping_results_by_id.each_pair do |id, results|
+        total += 1
+        t = group.find {|t| t.id == id}
+        save_ping( results, t )
+      end
+
     end
+    puts "Total targets checked: #{total}"
   end
 
   private
 
-  def check_ping( p1, target )
-    puts "about to ping #{target.hostname}"
+  def check_ping( p1 )
+    puts "about to ping #{p1.inspect}" if debug
+    results = {}
     if( p1.ping? )
-      save_reachable_target( target )
+      puts "responded" if debug
+      results[:reachable] = true
+      results[:last_up] = Time.now
     else
-      save_unreachable_target( target )
+      puts "did not respond" if debug
+      results[:reachable] = false
     end
+    return results
   end
 
-  def save_reachable_target( target )
-    puts "#{target.hostname} responded"
-    target.transaction do
-      target.reachable = true
-      target.last_up = Time.now
-      target.save
-    end
-  end
-
-  def save_unreachable_target( target )
-    puts "#{target.hostname} did not respond"
-    target.transaction do
-      target.reachable = false
-      target.save
-    end
+  def save_ping( results, target )
+    puts "updating target: #{target.id}" if debug
+    target.update( results )
   end
 
 end

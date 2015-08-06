@@ -6,4 +6,3 @@ require 'ping_processor'
 
 pp = PingProcessor.new
 pp.run( Target.where( ping_enabled: true ) )
-puts "Pings complete"
