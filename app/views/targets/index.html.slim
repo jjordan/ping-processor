@@ -1,4 +1,3 @@
-- model_class = Target
 .container
   .row
     .col-xs-12
@@ -8,47 +7,6 @@
 .container
   .row
     .col-md-8.col-xs-12
-      table.table.table-striped.tablesorter
-        thead
-          tr
-            th
-              = model_class.human_attribute_name(:id)
-            th
-              = model_class.human_attribute_name(:hostname)
-            th
-              = model_class.human_attribute_name(:address)
-            th
-              = model_class.human_attribute_name(:reachable)
-            th
-              = model_class.human_attribute_name(:last_up)
-            th
-              =t '.actions', :default => t("helpers.actions")
-        tbody
-          - @targets.each do |target|
-            tr
-              td
-                = link_to target.id, target_path(target)
-              td
-                = target.hostname
-              td
-                = target.address
-              td.reachable
-                - unless target.reachable
-                  span.label.label-danger
-                    = target.reachable
-                - else
-                  span.label.label-success
-                    = target.reachable
-              td.last_up
-                = target.last_up.present? ? target.last_up : 'N/A'
-              td
-                a.button.ping-button href="#{target_path( target ) }" data-remote="true" data-method="put" data-disable-with="Pinging..."
-                  = 'Ping'
+      = render partial: "shared/targets_table", locals: { targets: @targets }
     .col-md-4.col-xs-12
-      #canvas-holder
-        canvas#chart-area width="300" height="300"
-javascript:
-  $(document).ready(function(){
-    PingProcessor.generate_pie_chart( #{@total_reachable}, #{@total_unreachable}, #{@percentage_reachable}, #{@percentage_unreachable} );
-  });
-
+      = render "shared/pie_chart"

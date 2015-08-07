@@ -1,0 +1,6 @@
+#canvas-holder
+  canvas#chart-area width="300" height="300"
+javascript:
+  $(document).ready(function(){
+    PingProcessor.generate_pie_chart( #{@total_reachable}, #{@total_unreachable}, #{@percentage_reachable}, #{@percentage_unreachable} );
+  });
