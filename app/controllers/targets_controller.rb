@@ -5,8 +5,8 @@ skip_before_filter  :verify_authenticity_token
     @targets = Target.all
     @total_reachable = @targets.reachable.count
     @total_unreachable = @targets.unreachable.count
-    @percentage_reachable = "%.2f" % [(@total_reachable.to_f / (@total_reachable + @total_unreachable) ) * 100]
-    @percentage_unreachable = "%.2f" % [(@total_unreachable.to_f / (@total_reachable + @total_unreachable) ) * 100]
+    @percentage_reachable = calculate_percentage( @total_reachable, (@total_reachable + @total_unreachable) )
+    @percentage_unreachable = calculate_percentage( @total_unreachable, (@total_reachable + @total_unreachable) )
   end
 
   def show

@@ -49,39 +49,6 @@
         canvas#chart-area width="300" height="300"
 javascript:
   $(document).ready(function(){
-
-    var options = {
-      legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\" style=\"list-style-type:none\"><% for (var i=0; i<segments.length; i++){%><li><i class=\"fa fa-circle\" style=\"color:<%=segments[i].fillColor%>\"></i><span class=\"legend-label\" style=\"padding: 5px\"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>"
-
-    };
-    var pieData = [
-      { 
-        value: #{@total_unreachable},
-        color: "#F63333",
-        highlight: "#FF5A5A",
-        fillColor: "#F63333",
-        label: "Unreachable hosts (%#{@percentage_unreachable})"
-      },
-      { 
-        value: #{@total_reachable},
-        color: "#33F633",
-        highlight: "#5AFF5A",
-        fillColor: "#33F633",
-        label: "Reachable hosts (%#{@percentage_reachable})"
-      }
-    ];
-    var canvas = $("#chart-area")[0];
-    var ctx = $("#chart-area")[0].getContext("2d");
-    var pieChart = new Chart(ctx).Pie(pieData, options);
-
-    var legend = pieChart.generateLegend();
-
-    $('#canvas-holder').append(legend);
-
-    canvas.onclick = function(evt){
-      var activePoints = pieChart.getSegmentsAtEvent(evt);
-      console.log("activepoints: %O", activePoints);
-      console.log("Section clicked: %o", activePoints[0].label);
-    };
+    PingProcessor.generate_pie_chart( #{@total_reachable}, #{@total_unreachable}, #{@percentage_reachable}, #{@percentage_unreachable} );
   });
 
