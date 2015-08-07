@@ -15,7 +15,14 @@ gem 'secure_headers'
 gem 'ffaker'
 gem 'timecop'
 
+gem 'jbuilder'
 gem 'net-ping'
+gem 'pidfile'
+gem 'rails-api'
+gem "font-awesome-rails"
+
+gem 'bootstrap-sass', '~> 3.3.5'
+
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'

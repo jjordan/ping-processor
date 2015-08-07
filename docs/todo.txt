@@ -1,0 +1,28 @@
+ * Figure out why I'm getting database timeout and database lock *check*
+   + Switching to postgres *check*
+
+ * Rewrite script to only fork/create-thread for the actual pinging. *check*
+
+ * Write the controller (maybe REST API style)
+   + pie chart: need total targets up or down *check*
+   + ping request: need patch method to update a single target *check*
+   + bar charts: need list of appliances and the percentage up for each *check*
+
+   + detailed listing: need list of all targets, must be page-able and sort-able
+
+ * Start on the JavaScript to load and display the data.
+   + Find a graphing library that can do pie charts *check*
+   + build a page with a large table of all results *check*
+     - add pagination and sorting
+   + add another page with
+
+ * Figure out recover-ability with pidfile and other thing
+   + add a pidfile which prevents the script from running again
+   + add a cleanup routine which removes the pidfile if the program is exited early
+   + add a signal handler to catch signals (INT, HUP, KILL, etc) and clean up and exit if possible
+   + add a force flag which will replace the pidfile
+
+ * JavaScript testing
+
+ * Write documentation
+

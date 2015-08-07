@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Appliance Uptime</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+  </style>
+  <script src="/jquery.js"></script>
+  <script src="/highcharts.js"></script>
+</head>
+
+<body>
+  <!-- This file lives in public/main.html -->
+
+  <div id="container" style="width:100%; height:400px;"></div>
+
+<script>
+
+  $(document).ready(function(){
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Percentage of servers up'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: "Hosts",
+                colorByPoint: true,
+                data: [{
+                    name: "Unreachable Hosts",
+                    color: "red",
+                    y: 1934
+                }, {
+                    name: "Reachable Hosts",
+                    color: "green",
+                    y: 134
+                }]
+            }]
+        });
+    });
+
+    var options = {};
+    var data = [
+      { 
+        value: 1934,
+        color: "#F63333",
+        highlight: "#FF5A5A",
+        label: "Unreachable hosts"
+      },
+      { 
+        value: 134,
+        color: "#33F633",
+        highlight: "#5AFF5A",
+        label: "Reachable hosts"
+      }
+    ];
+  });
+
+</script>
+
+</body>
+</html>

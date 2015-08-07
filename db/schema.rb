@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805190726) do
+ActiveRecord::Schema.define(version: 20150806215140) do
 
   create_table "appliances", force: true do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150805190726) do
     t.datetime "updated_at"
   end
 
+  add_index "appliances", ["customer"], name: "index_appliances_on_customer"
   add_index "appliances", ["name"], name: "index_appliances_on_name", unique: true
 
   create_table "targets", force: true do |t|
@@ -35,5 +36,6 @@ ActiveRecord::Schema.define(version: 20150805190726) do
 
   add_index "targets", ["appliance_id"], name: "index_targets_on_appliance_id"
   add_index "targets", ["hostname"], name: "index_targets_on_hostname", unique: true
+  add_index "targets", ["reachable"], name: "index_targets_on_reachable"
 
 end

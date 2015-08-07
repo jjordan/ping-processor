@@ -1,3 +1,4 @@
+require 'net/ping'
 
 class PingProcessor
 
@@ -19,7 +20,7 @@ class PingProcessor
   end
 
   def run( dataset )
-    puts "Total targets to check: #{dataset.count}"
+    puts "Total targets to check: #{dataset.count}" if debug
     total = 0
     n = 1
     dataset.find_in_batches( 
@@ -48,7 +49,7 @@ class PingProcessor
       end
 
     end
-    puts "Total targets checked: #{total}"
+    puts "Total targets checked: #{total}" if debug
   end
 
   private

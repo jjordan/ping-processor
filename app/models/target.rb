@@ -8,4 +8,7 @@ class Target < ActiveRecord::Base
 
   validates :address,      presence:   true,
                            format:     {with: Resolv::IPv4::Regex}
+
+  scope :reachable, -> { where(reachable: true) }
+  scope :unreachable, -> { where(reachable: false) }
 end

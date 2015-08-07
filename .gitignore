@@ -17,3 +17,5 @@
 
 # For coverage analysis
 coverage
+
+/public/assets/*

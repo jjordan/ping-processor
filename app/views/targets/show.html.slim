@@ -1,0 +1,55 @@
+- model_class = Target
+.container
+  .row
+    .col-xs-12
+      .page-header
+        h1
+          =t '.title', :default => 'Host'
+.container
+  .row
+    .col-md-12.col-xs-12
+      dl.dl-horizontal
+        dt
+          strong
+            = model_class.human_attribute_name(:appliance_id)
+            | :
+        dd
+          = link_to (@target.appliance.name), appliance_path( @target.appliance )
+        dt
+          strong
+            = model_class.human_attribute_name(:hostname)
+            | :
+        dd
+          = @target.hostname
+        dt
+          strong
+            = model_class.human_attribute_name(:address)
+            | :
+        dd
+          = @target.address
+        dt
+          strong
+            = model_class.human_attribute_name(:reachable)
+            | :
+        dd.reachable
+          - unless @target.reachable
+              span.label.label-danger
+                = @target.reachable
+          - else
+            span.label.label-success
+              = @target.reachable
+        dt
+          strong
+            = model_class.human_attribute_name(:last_up)
+            | :
+        dd.last_up
+          = @target.last_up.present? ? @target.last_up : 'N/A'
+        dt
+          strong
+            = 'Actions'
+            | :
+        dd
+          a.button.ping-button href="#{target_path( @target ) }" data-remote="true" data-method="put" data-disable-with="Pinging..."
+            = 'Ping'
+      .form-actions
+        = link_to t('.back', :default => t("helpers.links.back")), targets_path, :class => 'btn'
