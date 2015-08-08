@@ -19,8 +19,8 @@ gem 'jbuilder'
 gem 'net-ping'
 gem 'pidfile'
 gem 'rails-api'
-gem "font-awesome-rails"
-
+gem 'font-awesome-rails'
+gem 'will_paginate'
 gem 'bootstrap-sass', '~> 3.3.5'
 
 

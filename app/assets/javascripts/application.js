@@ -90,8 +90,6 @@ PingProcessor.generate_pie_chart = function( total_reachable, total_unreachable,
 };
 
 $(document).on('ready page:load', function(){
-  $(".tablesorter").tablesorter(); 
-
   $(".ping-button").on("ajax:success", PingProcessor.ping_success );
 
   $(".ping-button").on("ajax:error", PingProcessor.ping_error );

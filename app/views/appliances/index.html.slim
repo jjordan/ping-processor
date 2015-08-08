@@ -8,6 +8,7 @@
 .container
   .row
     .col-md-6.col-xs-12
+      = will_paginate @appliances
       table.table.table-striped.tablesorter
         thead
           tr
@@ -26,6 +27,7 @@
                 = appliance.name
               td
                 = appliance.customer
+      = will_paginate @appliances
 
     .col-md-6.col-xs-12
       = render "shared/pie_chart"
