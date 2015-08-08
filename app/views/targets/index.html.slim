@@ -7,6 +7,6 @@
 .container
   .row
     .col-md-8.col-xs-12
-      = render partial: "shared/targets_table", locals: { targets: @targets }
+      = render partial: "shared/targets_table", locals: { targets: @targets, q: @q }
     .col-md-4.col-xs-12
       = render "shared/pie_chart"

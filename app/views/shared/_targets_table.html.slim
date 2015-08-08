@@ -3,15 +3,15 @@ table.table.table-striped.tablesorter
   thead
     tr
       th
-        = sort_link( @q, :id )
+        = sort_link( q, :id )
       th
-        = sort_link( @q, :hostname )
+        = sort_link( q, :hostname )
       th
-        = sort_link( @q, :address )
+        = sort_link( q, :address )
       th
-        = sort_link( @q, :reachable )
+        = sort_link( q, :reachable )
       th
-        = sort_link( @q, :last_up )
+        = sort_link( q, :last_up )
       th
         =t '.actions', :default => t("helpers.actions")
   tbody

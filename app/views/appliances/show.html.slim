@@ -27,6 +27,6 @@
       - if @appliance.targets.count == 0
         p No hosts configured for this appliance
       - else
-        = render partial: "shared/targets_table", locals: { targets: @appliance.targets }
+        = render partial: "shared/targets_table", locals: { targets: @targets, q: @q }
     .col-md-6.col-xs-12
       = render "shared/pie_chart"
