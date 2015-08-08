@@ -13,11 +13,11 @@
         thead
           tr
             th
-              = model_class.human_attribute_name(:id)
+              = sort_link( @q, :id )
             th
-              = model_class.human_attribute_name(:name)
+              = sort_link( @q, :name )
             th
-              = model_class.human_attribute_name(:customer)
+              = sort_link( @q, :customer )
         tbody
           - @appliances.each do |appliance|
             tr

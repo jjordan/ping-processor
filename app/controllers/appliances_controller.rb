@@ -1,6 +1,7 @@
 class AppliancesController < ApplicationController
   def index
-    @appliances = Appliance.all.paginate( page: params[:page], per_page: 10 )
+    @q = Appliance.ransack( params[:q] )
+    @appliances = @q.result.paginate( page: params[:page], per_page: 10 )
     @total_reachable = Target.reachable.count
     @total_unreachable = Target.unreachable.count
     @percentage_reachable = calculate_percentage( @total_reachable, (@total_reachable + @total_unreachable) )

@@ -2,7 +2,8 @@ class TargetsController < ApplicationController
 skip_before_filter  :verify_authenticity_token
 
   def index
-    @targets = Target.all.paginate( page: params[:page], per_page: 10 )
+    @q = Target.ransack( params[:q] )
+    @targets = @q.result.paginate( page: params[:page], per_page: 10 )
     @total_reachable = @targets.reachable.count
     @total_unreachable = @targets.unreachable.count
     @percentage_reachable = calculate_percentage( @total_reachable, (@total_reachable + @total_unreachable) )

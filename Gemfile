@@ -21,6 +21,7 @@ gem 'pidfile'
 gem 'rails-api'
 gem 'font-awesome-rails'
 gem 'will_paginate'
+gem 'ransack'
 gem 'bootstrap-sass', '~> 3.3.5'
 
 
